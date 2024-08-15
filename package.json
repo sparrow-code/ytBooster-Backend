@@ -1,0 +1,38 @@
+{
+  "name": "growinsta-backend",
+  "version": "1.0.0",
+  "description": "Bakend For Grow Insta",
+  "main": "app.js",
+  "scripts": {
+    "dev": "nodemon app.js",
+    "start": "node app.js"
+  },
+  "keywords": [
+    "growInsta",
+    "growInsta-Backend"
+  ],
+  "author": "SDWORLLD",
+  "license": "ISC",
+  "dependencies": {
+    "axios": "^1.4.0",
+    "body-parser": "^1.20.2",
+    "cheerio": "^1.0.0-rc.12",
+    "cookie-parser": "^1.4.6",
+    "cors": "^2.8.5",
+    "dotenv": "^16.3.0",
+    "express": "^4.18.2",
+    "firebase-admin": "^11.10.1",
+    "formidable": "^3.5.0",
+    "got": "^13.0.0",
+    "https-proxy-agent": "^7.0.0",
+    "jsonwebtoken": "^9.0.1",
+    "libsodium-wrappers": "^0.7.13",
+    "moment": "^2.29.4",
+    "mongoose": "^7.3.0",
+    "node-schedule": "^2.1.1",
+    "request": "^2.88.2",
+    "uuid": "^9.0.0",
+    "xlsx": "^0.18.5"
+  },
+  "type": "module"
+}

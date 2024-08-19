@@ -61,29 +61,33 @@ const getOrderById = async (req, res) => {
   }
 };
 
-// ? To Generate Order For User User Will Make Payment After This
+// ? To Generate Order For User, User Will Make Payment After This
 const generateOrder = async (req, res) => {
   try {
     const maxOrderId = await OrderModel.find().sort({ orderId: -1 }).limit(1);
 
     if (maxOrderId.length === 0) {
-      req.body.orderId = 1;
+      req.body.order_id = 1;
     } else {
-      req.body.orderId = maxOrderId[0].orderId + 1;
+      req.body.orderId = maxOrderId[0].order_id + 1;
     }
 
     // Order Created
     const order = await OrderModel.create({
-      userName: req.body.userName,
-      posts: req.body.posts,
-      quantity: req.body.quantity,
-      serviceID: req.body.serviceID,
-      orderId: req.body.orderId,
-      amount: req.body.amount,
+      link: req.body.link,
+      service_id: req.body.choosePlan,
+      order_id: req.body.order_id,
+      smm_order: "0",
       status: "Processing",
     });
 
-    res.status(200).json({ status: true, order: order });
+    res.status(200).json({
+      status: true,
+      order: {
+        order_id: order.order_id,
+        status: order.status,
+      },
+    });
   } catch (error) {
     console.log(error.message);
     res.status(404).json({ message: error.message });
@@ -99,13 +103,12 @@ const placeOrder = async (req, res) => {
   }
 };
 
-const failedOrder = async (req, res) => {
+const updateOrder = async (req, res) => {
   try {
-    console.log(req.params.orderId);
     const order = await OrderModel.findByIdAndUpdate(
       req.params.orderId,
       {
-        status: "Failed",
+        status: req.body.payment_status,
       },
       { new: true }
     );
@@ -136,16 +139,6 @@ const createOrder = async () => {
     } */
 };
 
-const postOrder = async (req, res) => {
-  try {
-    // Order Created
-    //  const order = await OrderModel.create(req.body);
-    // res.status(200).json({ status: true, order: order });
-  } catch (error) {
-    res.status(404).json({ message: error.message });
-  }
-};
-
 const putOrderById = async (req, res) => {
   try {
     res.status(200).json("Pending");
@@ -172,10 +165,9 @@ export {
   getOrderByUsername,
   getFilterOrder,
   generateOrder,
-  failedOrder,
+  updateOrder,
   createOrder,
   placeOrder,
-  postOrder,
   putOrderById,
   deleteOrderByID,
 };

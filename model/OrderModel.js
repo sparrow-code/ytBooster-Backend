@@ -2,16 +2,11 @@ import mongoose from "mongoose";
 
 const OrderSchema = new mongoose.Schema(
   {
-    userName: { type: String },
-    posts: { type: Array },
-    serviceID: { type: mongoose.Schema.Types.ObjectId, ref: "Service" },
-    quantity: { type: Number },
-    amount: { type: Number },
-    transactionId: { type: String },
-    orderId: { type: Number },
-    approvalRefNo: { type: String },
-    order: { type: Array },
-    status: { type: String, default: "Pending" }, // User Status
+    link: { type: String }, // youtube link
+    service_id: { type: mongoose.Schema.Types.ObjectId, ref: "Service" }, // service id
+    order_id: { type: Number }, // order id generate squence
+    smm_order: { type: String, default: "0" }, // order id in smm
+    status: { type: String, default: "Pending" }, // order status
   },
   { timestamps: true }
 );

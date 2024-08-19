@@ -12,16 +12,13 @@ import {
   createOrder,
   generateOrder,
   placeOrder,
-  failedOrder,
-  postOrder,
   putOrderById,
   deleteOrderByID,
+  updateOrder,
 } from "../controller/orderController.js";
 import { filterOrder, makeOrderOnSmm } from "../middleware/orderMiddleware.js";
 
 import { checkAuth, checkDashAuth } from "../middleware/checkAuth.js";
-
-import { checkForBanUser } from "../middleware/banUser.middelware.js";
 
 const router = express.Router();
 
@@ -41,14 +38,11 @@ router
   .put(putOrderById) // ? Call By Dashboard
   .delete(deleteOrderByID); // ? Call By Dashboard
 
-// ! Below All Route Have Called By Android App
-// ? Call By Android App
-router
-  .route("/generateOrder/:serviceId")
-  .post(checkAuth, checkForBanUser, verifyService, generateOrder); // To Generate Order For User
+// ! Call By User
+router.route("/generateOrder/:serviceId").post(generateOrder);
 
-// ? Call By Android App
-router.route("/failedOrder/:orderId").put(checkAuth, failedOrder);
+// ! Call By User
+router.route("/updateOrder/:orderId").put(updateOrder);
 
 // ? Call By Android App
 router

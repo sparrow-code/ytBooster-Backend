@@ -54,7 +54,9 @@ const getFilterOrder = async (req, res) => {
 
 const getOrderById = async (req, res) => {
   try {
-    const order = await OrderModel.findById(req.params.id);
+    const order = await OrderModel.findById(req.params.id).populate(
+      "service_id"
+    );
     res.status(200).json({ status: true, order: order });
   } catch (error) {
     res.status(404).json({ message: error.message });
@@ -64,12 +66,12 @@ const getOrderById = async (req, res) => {
 // ? To Generate Order For User, User Will Make Payment After This
 const generateOrder = async (req, res) => {
   try {
-    const maxOrderId = await OrderModel.find().sort({ orderId: -1 }).limit(1);
+    const maxOrderId = await OrderModel.find().sort({ order_id: -1 }).limit(1);
 
     if (maxOrderId.length === 0) {
       req.body.order_id = 1;
     } else {
-      req.body.orderId = maxOrderId[0].order_id + 1;
+      req.body.order_id = maxOrderId[0].order_id + 1;
     }
 
     // Order Created
@@ -82,9 +84,9 @@ const generateOrder = async (req, res) => {
     });
 
     res.status(200).json({
-      status: true,
+      success: true,
       order: {
-        order_id: order.order_id,
+        _id: order._id,
         status: order.status,
       },
     });

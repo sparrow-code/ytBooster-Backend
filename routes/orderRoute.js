@@ -39,7 +39,7 @@ router
   .delete(deleteOrderByID); // ? Call By Dashboard
 
 // ! Call By User
-router.route("/generateOrder/:serviceId").post(generateOrder);
+router.route("/generate").post(generateOrder);
 
 // ! Call By User
 router.route("/updateOrder/:orderId").put(updateOrder);

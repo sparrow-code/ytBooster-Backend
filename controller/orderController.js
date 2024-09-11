@@ -12,11 +12,11 @@ const getAllOrder = async (req, res) => {
     if (req.query.option !== "All") {
       const dateQuery = queryByTime(req.query);
       order = await OrderModel.find({ updatedAt: dateQuery })
-        .populate("serviceID")
+        .populate("service_id")
         .sort({ createdAt: -1 });
     } else {
-      order = await OrderModel.find()
-        .populate("serviceID")
+      order = await OrderModel.find({})
+        .populate("service_id")
         .sort({ createdAt: -1 })
         .skip(skip)
         .limit(limit);
